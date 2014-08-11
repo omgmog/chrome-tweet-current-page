@@ -2,8 +2,14 @@ chrome.browserAction.onClicked.addListener(
     function(tab) {
         chrome.tabs.sendRequest(tab.id, {method: "getSelection"},
             function(response){
+                var text;
+                if (response.data) {
+                    text = response.data;
+                } else{
+                    text = tab.title;
+                }
                 sendServiceRequest(
-                    encodeURIComponent(response.data),
+                    encodeURIComponent(text),
                     encodeURIComponent(tab.url)
                 );
             }
